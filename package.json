@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:css": "tailwindcss -i ./src/css/input.css -o ./src/css/output.css --watch"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,10 @@
   "bugs": {
     "url": "https://github.com/sona2801/Orvion/issues"
   },
-  "homepage": "https://github.com/sona2801/Orvion#readme"
+  "homepage": "https://github.com/sona2801/Orvion#readme",
+  "devDependencies": {
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.20",
+    "tailwindcss": "^3.4.17"
+  }
 }
