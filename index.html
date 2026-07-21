@@ -30,93 +30,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
-<style>
-  :root {
-    --bg: #08080A;
-    --surface: #0E0E12;
-    --text: #F5F5F7;
-    --muted: #86868B;
-    --border: rgba(255,255,255,0.08);
-    --glass: rgba(255,255,255,0.03);
-    --gold: #D4AF37;
-    --gold-light: #F8E29C;
-    --gold-dark: #AA8828;
-  }
-  * { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-  html, body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
-  .font-serif { font-family: 'Instrument Serif', serif; font-weight: 400; }
-  .font-mono { font-family: 'JetBrains Mono', monospace; }
-  
-  /* Utilities */
-  .glass { background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--border); }
-  .text-gradient { background: linear-gradient(180deg, #FFFFFF 0%, #A1A1AA 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .text-gradient-gold { background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
-  .border-gradient-gold { border: 1px solid transparent; background: linear-gradient(var(--bg), var(--bg)) padding-box, linear-gradient(180deg, rgba(212,175,55,0.4), rgba(212,175,55,0.05)) border-box; }
-  
-  /* Grids & Backgrounds */
-  .grid-bg {
-    background-image: linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
-    background-size: 64px 64px;
-    mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
-    -webkit-mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
-  }
-  .noise::after {
-    content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.03; z-index: 1;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  }
-  
-  /* Scrollbar */
-  ::-webkit-scrollbar { width: 6px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-  ::-webkit-scrollbar-thumb:hover { background: #555; }
-  
-  /* Animations */
-  .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
-  .reveal.in-view { opacity: 1; transform: translateY(0); }
-  .stagger > * { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .stagger.in-view > * { opacity: 1; transform: translateY(0); }
-  .stagger.in-view > *:nth-child(1) { transition-delay: 0.1s; }
-  .stagger.in-view > *:nth-child(2) { transition-delay: 0.2s; }
-  .stagger.in-view > *:nth-child(3) { transition-delay: 0.3s; }
-  .stagger.in-view > *:nth-child(4) { transition-delay: 0.4s; }
-
-  /* Marquee */
-  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-  .marquee-track { animation: marquee 40s linear infinite; }
-  
-  /* Accordion */
-  .accordion-content { max-height: 0; overflow: hidden; transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
-  
-  /* Floating Form Labels */
-  .float-field { position: relative; }
-  .float-input { width: 100%; background: rgba(255,255,255,0.02); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem 1rem 0.5rem; color: #fff; font-size: 0.95rem; transition: border-color 0.2s; }
-  .float-input:focus { outline: none; border-color: rgba(212, 175, 55, 0.5); }
-  .float-label { position: absolute; left: 1rem; top: 1rem; color: var(--muted); pointer-events: none; transition: all 0.2s ease; font-size: 0.95rem; }
-  .float-input:focus + .float-label, .float-input:not(:placeholder-shown) + .float-label { top: 0.35rem; font-size: 0.7rem; color: var(--gold); text-transform: uppercase; letter-spacing: 0.05em; }
-  
-  /* Glow Orbs */
-  .orb { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.2; pointer-events: none; z-index: 0; }
-  
-  /* Bento Grid hover */
-  .bento-card { transition: transform 0.3s ease, border-color 0.3s ease; }
-  .bento-card:hover { border-color: rgba(212,175,55,0.2); transform: translateY(-4px); }
-  .bento-card:hover .bento-icon { color: var(--gold); }
-  
-  /* Magnetic Button */
-  .magnetic-btn { transition: transform 0.2s ease-out; }
-  
-  /* Selection */
-  ::selection { background: rgba(212, 175, 55, 0.3); color: #fff; }
-
-  /* Preloader */
-  #preloader { position: fixed; inset: 0; background: #08080A; z-index: 9999; display: flex; align-items: center; justify-content: center; transition: opacity 0.5s ease, visibility 0.5s ease; }
-  #preloader.hidden { opacity: 0; visibility: hidden; }
-  .loader-logo { animation: pulseScale 1.5s ease-in-out infinite; }
-  @keyframes pulseScale { 0%, 100% { transform: scale(1); opacity: 0.8; } 50% { transform: scale(1.05); opacity: 1; } }
-</style>
   <link rel="stylesheet" href="./src/css/output.css">
+  <link rel="stylesheet" href="./src/css/styles.css">
 </head>
 <body class="relative noise">
 
@@ -210,7 +125,7 @@
       Enterprise AI & Infrastructure Platform
     </div>
 
-    <h1 class="reveal text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-tighter leading-[0.95] mb-8">
+    <h1 class="reveal text-5xl md:text-7xl lg:text-[5.5rem] font-semibold tracking-tighter leading-[0.95] mb-8 text-blue-500">
       Engineering the future of<br/>
       <span class="font-serif italic text-gradient-gold">intelligent</span> enterprise.
     </h1>
@@ -255,6 +170,87 @@
       <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 px-6 py-2 bg-amber-600 rounded-full text-xs font-mono text-black shadow-lg shadow-amber-600/30">v4.0 • Enterprise Ready</div>
     </div>
 
+  </div>
+</section>
+
+<!-- ============ SERVICES ============ -->
+<section id="services" class="py-24 border-y border-white/5 bg-gradient-to-br from-white/[0.03] via-transparent to-white/[0.02]">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="max-w-3xl mx-auto text-center mb-16">
+      <p class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.03] px-4 py-2 text-xs font-medium uppercase tracking-[0.25em] text-neutral-400 mb-6">
+        <span class="h-2 w-2 rounded-full bg-amber-400"></span>
+        Our Expertise
+      </p>
+      <h2 class="text-3xl md:text-4xl lg:text-5xl font-semibold tracking-tight text-white mb-4">AI Solutions Built For Modern Businesses</h2>
+      <p class="text-lg text-neutral-400 leading-relaxed">We design intelligent automation systems that streamline operations, improve customer experiences, and help businesses scale efficiently.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="h-6 w-6 rounded-md border border-current"></div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">AI Automation</h3>
+        <p class="text-sm leading-7 text-neutral-400">Automate repetitive business workflows using intelligent AI systems.</p>
+      </a>
+
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="flex items-center gap-2">
+            <span class="h-6 w-6 rounded-full border border-current"></span>
+            <span class="h-6 w-6 rounded-full border border-current"></span>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">AI Agents</h3>
+        <p class="text-sm leading-7 text-neutral-400">Custom AI agents for customer support, sales and internal operations.</p>
+      </a>
+
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="flex items-center gap-1">
+            <span class="h-5 w-2 rounded-full border border-current"></span>
+            <span class="h-7 w-2 rounded-full border border-current"></span>
+            <span class="h-3 w-2 rounded-full border border-current"></span>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Workflow Integration</h3>
+        <p class="text-sm leading-7 text-neutral-400">Connect your business tools into one seamless automated workflow.</p>
+      </a>
+
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="relative h-6 w-6">
+            <span class="absolute inset-0 rounded-full border border-current"></span>
+            <span class="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border border-current"></span>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Lead Generation</h3>
+        <p class="text-sm leading-7 text-neutral-400">AI-powered systems that capture, qualify and nurture leads automatically.</p>
+      </a>
+
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="flex h-6 w-6 items-end gap-1">
+            <span class="h-2 w-1 rounded-full bg-current"></span>
+            <span class="h-4 w-1 rounded-full bg-current"></span>
+            <span class="h-6 w-1 rounded-full bg-current"></span>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Business Intelligence</h3>
+        <p class="text-sm leading-7 text-neutral-400">Transform business data into actionable insights using AI.</p>
+      </a>
+
+      <a href="#contact" class="group block rounded-2xl border border-white/10 bg-white/[0.03] p-8 shadow-[0_10px_40px_rgba(0,0,0,0.18)] transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/30 hover:bg-white/[0.05]">
+        <div class="mb-6 flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-amber-400">
+          <div class="relative h-6 w-6 rotate-45">
+            <span class="absolute inset-0 rounded-lg border border-current"></span>
+            <span class="absolute inset-2 rounded border border-current"></span>
+          </div>
+        </div>
+        <h3 class="text-xl font-semibold text-white mb-3">Custom AI Solutions</h3>
+        <p class="text-sm leading-7 text-neutral-400">Tailor-made AI systems built specifically for your business needs.</p>
+      </a>
+    </div>
   </div>
 </section>
 
